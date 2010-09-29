@@ -1,6 +1,6 @@
 
 import be.libis.DeletePidsOptions;
-import be.libis.GeneralOptionsHandler;
+import be.libis.GeneralOptionsManager;
 import be.libis.digitool.ToolBox;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -21,12 +21,13 @@ import uk.co.flamingpenguin.jewel.cli.CliFactory;
  */
 public class DeletePids {
 
-    private static final Logger logger = Logger.getLogger(UpdateStream.class.getName());
+    private static final Logger logger = Logger.getLogger(DeletePids.class.getName());
 
     public static void main(String[] args) {
 
         DeletePidsOptions options =
-                GeneralOptionsHandler.processDeletePidsOptions(args, logger);
+                new GeneralOptionsManager<DeletePidsOptions>().processOptions(
+                DeletePidsOptions.class, args, logger);
 
         if (options == null) {
             return; // error messages are printed by GeneralOptionsHandler
@@ -90,7 +91,7 @@ public class DeletePids {
         logger.info("Deleting object with PID: '" + pid + "'");
         if (tb.deleteDigitalEntity(pid.trim())) {
             logger.info("SUCCESS: Deleted object '" + pid + "'");
-        }       else  {
+        } else {
             logger.info("FAILURE: Could not delete object '" + pid + "'");
         }
 

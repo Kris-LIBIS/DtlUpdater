@@ -1,5 +1,0 @@
-usage_type: VIEW_MAIN
-operations:
-        - tag: label
-          action: append
-          value: " (watermerk)"

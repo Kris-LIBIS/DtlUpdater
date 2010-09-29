@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-import be.libis.GeneralOptionsHandler;
+import be.libis.GeneralOptionsManager;
 import be.libis.UpdateStreamOptions;
 import be.libis.digitool.ToolBox;
 import java.io.BufferedReader;
@@ -56,7 +56,8 @@ public class UpdateStream {
     public static void main(String[] args) {
 
         UpdateStreamOptions options =
-                GeneralOptionsHandler.processUpdateStreamOptions(args, logger);
+                new GeneralOptionsManager<UpdateStreamOptions>().processOptions(
+                    UpdateStreamOptions.class, args, logger);
 
         if (options == null) {
             return; // error messages are printed by GeneralOptionsHandler
@@ -147,7 +148,7 @@ public class UpdateStream {
 
         String new_pid = "";
 
-        // default usage type: (note the different query string)
+        // default usage type:
         String usageType = usage_type.equals("")
                 ? "VIEW" : usage_type.toUpperCase();
 

@@ -1,5 +1,5 @@
 
-import be.libis.GeneralOptionsHandler;
+import be.libis.GeneralOptionsManager;
 import be.libis.UpdateInfoOptions;
 import be.libis.digitool.ToolBox;
 import java.io.BufferedReader;
@@ -41,7 +41,7 @@ public class UpdateInfo {
         public ArrayList<UpdateActionDetail> details;
     }
     private static ToolBox toolbox = new ToolBox();
-    private static final Logger logger = Logger.getLogger(UpdateStream.class.getName());
+    private static final Logger logger = Logger.getLogger(UpdateInfo.class.getName());
     private static ArrayList<UpdateAction> updateActions = new ArrayList<UpdateAction>();
     private static Set<String> validTags = new HashSet<String> ();
     private static Set<String> validActions = new HashSet<String> ();
@@ -74,7 +74,8 @@ public class UpdateInfo {
         validActions.add("delete");
 
         UpdateInfoOptions options =
-                GeneralOptionsHandler.processUpdateInfoOptions(args, logger);
+                new GeneralOptionsManager<UpdateInfoOptions>()
+                .processOptions(UpdateInfoOptions.class, args, logger);
 
         if (options == null) {
             return; // error messages are printed by GeneralOptionsHandler

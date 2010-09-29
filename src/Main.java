@@ -1,4 +1,5 @@
 
+import be.libis.AddStreamOptions;
 import be.libis.DeletePidsOptions;
 import be.libis.UpdateInfoOptions;
 import be.libis.UpdateStreamOptions;
@@ -25,12 +26,14 @@ public class Main {
         String class_path = prop.getProperty("java.class.path", null);
 
         out.println("\nUsage: java -cp " + class_path + " <command> ...");
-        out.println("\ncommand: UpdateStream  - Update file stream(s) in the DigiTool Repository");
+        out.println("\ncommand: UpdateStream  - Update file stream(s) in the DigiTool Repository\n");
         out.println(CliFactory.createCli(UpdateStreamOptions.class).getHelpMessage());
-        out.println("\ncommand: DeletePids    - Delete object(s) from the DigiTool repository");
+        out.println("\ncommand: DeletePids    - Delete object(s) from the DigiTool repository\n");
         out.println(CliFactory.createCli(DeletePidsOptions.class).getHelpMessage());
-        out.println("\ncommand: UpdateInfo    - Update object info in the DigiTool repository");
+        out.println("\ncommand: UpdateInfo    - Update object info in the DigiTool repository\n");
         out.println(CliFactory.createCli(UpdateInfoOptions.class).getHelpMessage());
+        out.println("\ncommand: AddStream     - Add a new object (manifestation) in the DigiTool repository\n");
+        out.println(CliFactory.createCli(AddStreamOptions.class).getHelpMessage());
         out.println();
     }
 
