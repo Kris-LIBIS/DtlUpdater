@@ -35,8 +35,7 @@ public class DeletePids {
 
         try {
 
-            ToolBox tb = new ToolBox();
-            tb.setLogger(logger);
+            ToolBox.INSTANCE.setLogger(logger);
 
             if (!options.isInputFile() && options.getPIDs() == null) {
                 System.err.println();
@@ -59,7 +58,7 @@ public class DeletePids {
                         if (empty.equals(pid)) {
                             continue;
                         }
-                        deletePid(tb, pid);
+                        deletePid(ToolBox.INSTANCE, pid);
                     }
                     in.close();
 
@@ -73,7 +72,7 @@ public class DeletePids {
 
             if (pids != null) {
                 for (String pid : pids) {
-                    deletePid(tb, pid);
+                    deletePid(ToolBox.INSTANCE, pid);
                 }
             }
 

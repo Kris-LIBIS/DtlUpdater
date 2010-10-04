@@ -40,12 +40,10 @@ public class UpdateInfo {
         public String usage_type;
         public ArrayList<UpdateActionDetail> details;
     }
-    private static ToolBox toolbox = new ToolBox();
     private static final Logger logger = Logger.getLogger(UpdateInfo.class.getName());
     private static ArrayList<UpdateAction> updateActions = new ArrayList<UpdateAction>();
-    private static Set<String> validTags = new HashSet<String> ();
-    private static Set<String> validActions = new HashSet<String> ();
-
+    private static Set<String> validTags = new HashSet<String>();
+    private static Set<String> validActions = new HashSet<String>();
 
     public static void main(String[] args) {
 
@@ -74,8 +72,7 @@ public class UpdateInfo {
         validActions.add("delete");
 
         UpdateInfoOptions options =
-                new GeneralOptionsManager<UpdateInfoOptions>()
-                .processOptions(UpdateInfoOptions.class, args, logger);
+                new GeneralOptionsManager<UpdateInfoOptions>().processOptions(UpdateInfoOptions.class, args, logger);
 
         if (options == null) {
             return; // error messages are printed by GeneralOptionsHandler
@@ -83,7 +80,7 @@ public class UpdateInfo {
 
         try {
 
-            toolbox.setLogger(logger);
+            ToolBox.INSTANCE.setLogger(logger);
 
             {
                 File updateActionFile = options.getUpdateActionFile();
@@ -100,18 +97,18 @@ public class UpdateInfo {
                         UpdateAction.UpdateActionDetail action_detail =
                                 new UpdateAction.UpdateActionDetail();
                         action_detail.tag = (String) operation.get("tag");
-                        if (!validTags.contains(action_detail.tag) ) {
+                        if (!validTags.contains(action_detail.tag)) {
                             continue;
                         }
                         action_detail.action = (String) operation.get("action");
-                        if (!validActions.contains(action_detail.action) ) {
+                        if (!validActions.contains(action_detail.action)) {
                             continue;
                         }
                         if (!action_detail.action.equals("delete")) {
                             action_detail.value = (String) operation.get("value");
                         }
-                        if (action_detail.action.equals("search_and_replace_all") ||
-                                action_detail.action.equals("search_and_replace_first")) {
+                        if (action_detail.action.equals("search_and_replace_all")
+                                || action_detail.action.equals("search_and_replace_first")) {
                             action_detail.regex = (String) operation.get("regex");
                         }
 
@@ -183,7 +180,7 @@ public class UpdateInfo {
                     + "' for PID '" + master_pid + "'");
 
             List<String> pidList =
-                    toolbox.getManifestationPids(master_pid, action.usage_type);
+                    ToolBox.INSTANCE.getManifestationPids(master_pid, action.usage_type);
             pidMap.put(action.usage_type, pidList);
             pidSet.addAll(pidList);
             logger.info("Found: " + pidList);
@@ -200,7 +197,7 @@ public class UpdateInfo {
         // get all the digital entities for the collected pids
         Map<String, String> deMap = new HashMap<String, String>();
         for (String pid : pidSet) {
-            String digital_entity = toolbox.retrieveObject(pid);
+            String digital_entity = ToolBox.INSTANCE.retrieveObject(pid);
             if (digital_entity == null) {
                 logger.severe("Failed to retrieve digital entity info for " + pid);
                 failedPids.add(pid);
@@ -236,7 +233,7 @@ public class UpdateInfo {
                             + " '" + detail.tag + "'"
                             + " " + detail.action
                             + " '" + detail.value + "'");
-                    digital_entity = toolbox.transformXml(
+                    digital_entity = ToolBox.INSTANCE.transformXml(
                             digital_entity, ToolBox.updateInfoXsl, parameters);
                     deMap.put(pid, digital_entity);
                 }
@@ -256,7 +253,7 @@ public class UpdateInfo {
         // update the digital entities
         logger.info("Updating repository ...");
         for (Entry<String, String> entry : deMap.entrySet()) {
-            if (!toolbox.updateDigitalEntity(entry.getValue())) {
+            if (!ToolBox.INSTANCE.updateDigitalEntity(entry.getValue())) {
                 failedPids.add(entry.getKey());
             }
         }

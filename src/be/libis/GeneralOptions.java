@@ -28,6 +28,9 @@ public interface GeneralOptions {
     int getConsoleLogLevel();
     boolean isConsoleLogLevel();
 
+    @Option(shortName="S",description="Simulate repository update")
+    boolean isSimulateUpdate();
+
     /*
     @Option(description="Specifies SQLLite database file to log to")
     String getLogDatabase();

@@ -134,8 +134,7 @@ public class UpdateStream {
 
     private static void updateStreamWorker(String file_name, String usage_type) {
 
-        ToolBox tb = new ToolBox();
-        tb.setLogger(logger);
+        ToolBox.INSTANCE.setLogger(logger);
 
         boolean success = false;
 
@@ -154,7 +153,7 @@ public class UpdateStream {
 
         do {
 
-            String[] pids = tb.getPid(label, usageType);
+            String[] pids = ToolBox.INSTANCE.getPid(label, usageType);
 
             if (pids == null || pids.length <= 0) {
                 logger.severe("Could not find any object with label: '" + label
@@ -194,7 +193,7 @@ public class UpdateStream {
             ToolBox.DENewParameters new_params = new ToolBox.DENewParameters(
                     fileName, usageType, old_pid);
 
-            new_pid = tb.addDigitalEntity(new_params);
+            new_pid = ToolBox.INSTANCE.addDigitalEntity(new_params);
 
             if (new_pid == null || new_pid.equals("")) {
                 break;
@@ -210,13 +209,13 @@ public class UpdateStream {
             copy_params.copyMetadata = true;
             copy_params.copyRelations = true;
 
-            success = tb.copyDigitalEntityInfo(copy_params);
+            success = ToolBox.INSTANCE.copyDigitalEntityInfo(copy_params);
             if (!success) {
                 break;
             }
 
             if (delete_old_pid) {
-                success = tb.deleteDigitalEntity(old_pid);
+                success = ToolBox.INSTANCE.deleteDigitalEntity(old_pid);
             }
 
         } while (false);

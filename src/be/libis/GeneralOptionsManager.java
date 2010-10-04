@@ -57,6 +57,10 @@ public class GeneralOptionsManager<T> {
             console_handler.setLevel(level);
         }
 
+        if (options.isSimulateUpdate()) {
+            ToolBox.INSTANCE.simulateUpdate = true;
+        }
+
         return true;
     }
 
