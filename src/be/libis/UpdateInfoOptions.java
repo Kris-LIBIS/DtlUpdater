@@ -21,7 +21,7 @@ public interface UpdateInfoOptions extends GeneralOptions {
     @Option(description="Update action file")
     File getUpdateActionFile();
 
-    @Option(description="Input file containing a list of PIDs to delete")
+    @Option(description="Input file containing a list of PIDs")
     File getInputFile();
     boolean isInputFile();
 

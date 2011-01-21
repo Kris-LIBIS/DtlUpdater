@@ -207,7 +207,7 @@ public class UpdateStream {
                     new ToolBox.DECopyParameters(old_pid, new_pid);
             copy_params.copyControl = true;
             copy_params.copyMetadata = true;
-            copy_params.copyRelations = true;
+            copy_params.copyRelations = false;
 
             success = ToolBox.INSTANCE.copyDigitalEntityInfo(copy_params);
             if (!success) {

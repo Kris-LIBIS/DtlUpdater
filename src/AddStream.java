@@ -153,7 +153,7 @@ public class AddStream {
 
             if (pids == null || pids.length <= 0) {
                 logger.severe("Could not find any object with label: '" +
-                        label + "' and usage type: '" + usageType + "'");
+                        label + "' and usage type: '" + referenceType + "'");
                 break;
             }
 
@@ -191,7 +191,8 @@ public class AddStream {
             copy_params.usage_type = usageType;
             copy_params.copyControl = true;
             copy_params.copyMetadata = true;
-            copy_params.copyRelations = true;
+            copy_params.copyRelations = false;
+            copy_params.clear_complex = true;
 
             success = ToolBox.INSTANCE.copyDigitalEntityInfo(copy_params);
             if (!success) {
