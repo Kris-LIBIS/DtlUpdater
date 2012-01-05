@@ -89,11 +89,12 @@ public class UpdateInfo {
                 for (Object data : yaml.loadAll(fstream)) {
                     UpdateAction action = new UpdateAction();
                     action.details = new ArrayList<UpdateAction.UpdateActionDetail>();
-                    Map map = (Map) data;
+                    @SuppressWarnings(value = "unchecked")
+                    Map<String,Object> map = (Map<String,Object>) data;
                     action.usage_type = (String) map.get("usage_type");
                     @SuppressWarnings(value = "unchecked")
-                    List<Map> operations = (List<Map>) map.get("operations");
-                    for (Map operation : operations) {
+                    List<Map<String,Object>> operations = (List<Map<String,Object>>) map.get("operations");
+                    for (Map<String,Object> operation : operations) {
                         UpdateAction.UpdateActionDetail action_detail =
                                 new UpdateAction.UpdateActionDetail();
                         action_detail.tag = (String) operation.get("tag");

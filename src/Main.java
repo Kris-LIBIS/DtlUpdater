@@ -1,4 +1,5 @@
 
+import be.libis.AddChildOptions;
 import be.libis.AddStreamOptions;
 import be.libis.DeletePidsOptions;
 import be.libis.UpdateInfoOptions;
@@ -34,6 +35,8 @@ public class Main {
         out.println(CliFactory.createCli(UpdateInfoOptions.class).getHelpMessage());
         out.println("\ncommand: AddStream     - Add a new object (manifestation) in the DigiTool repository\n");
         out.println(CliFactory.createCli(AddStreamOptions.class).getHelpMessage());
+        out.println("\ncommand: AddChild      - Add a new child object to an existing complex object in the DigiTool repository\n");
+        out.println(CliFactory.createCli(AddChildOptions.class).getHelpMessage());
         out.println();
     }
 

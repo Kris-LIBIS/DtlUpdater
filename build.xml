@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<!DOCTYPE project>
+<project name="DtlUpdater" default="main">
+  <target name="main" depends="create_run_jar" />
+  <target name="create_run_jar" description="Build runnable jar">
+      <jar destfile="dist/DtlUpdater.jar" filesetmanifest="mergewithoutmain">
+          <manifest>
+              <attribute name="Main-Class" value="Main"/>
+              <attribute name="Class-Path" value="."/>
+          </manifest>
+          <fileset dir="bin"/>
+          <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/DigiToolBox.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/activation.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/axis.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/commons-discovery.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/commons-logging.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/jaxrpc.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/jewelcli-0.6.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/mail.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/saaj.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/snakeyaml-1.7.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/sqljet.jar"/>
+        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/wsdl4j.jar"/>
+      </jar>
+  </target>
+  <target name="doc">
+    <javadoc sourcepath="src" destdir="doc" use="true" />
+  </target>
+</project>
