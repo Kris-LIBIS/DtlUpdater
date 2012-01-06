@@ -1,29 +1,86 @@
 <?xml version="1.0" ?>
 <!DOCTYPE project>
 <project name="DtlUpdater" default="main">
-  <target name="main" depends="create_run_jar" />
-  <target name="create_run_jar" description="Build runnable jar">
-      <jar destfile="dist/DtlUpdater.jar" filesetmanifest="mergewithoutmain">
-          <manifest>
-              <attribute name="Main-Class" value="Main"/>
-              <attribute name="Class-Path" value="."/>
-          </manifest>
-          <fileset dir="bin"/>
-          <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/DigiToolBox.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/activation.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/axis.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/commons-discovery.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/commons-logging.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/jaxrpc.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/jewelcli-0.6.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/mail.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/saaj.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/snakeyaml-1.7.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/sqljet.jar"/>
-        <zipfileset excludes="META-INF/*.SF" src="../DigiToolBox/dist/lib/wsdl4j.jar"/>
-      </jar>
-  </target>
-  <target name="doc">
-    <javadoc sourcepath="src" destdir="doc" use="true" />
-  </target>
+	
+	<target name="main" depends="create_jar,create_run_jars" />
+	
+	<target name="create_jar" description="Build jar">
+		<jar destfile="dist/DtlUpdater.jar" index="true">
+			<fileset dir="bin" />
+		</jar>
+	</target>
+	
+	<target name="create_run_jars">
+		<BuildRunnableJar class="AddChild"/>
+		<BuildRunnableJar class="AddStream"/>
+		<BuildRunnableJar class="DeletePids"/>
+		<BuildRunnableJar class="UpdateInfo"/>
+		<BuildRunnableJar class="UpdateStream"/>
+	</target>
+	
+	<property name="src_clss_path" value="./ axis.jar jaxrpc.jar wsdl4j.jar activation.jar commons-discovery.jar commons-logging.jar mail.jar DigiToolBox.jar jewelcli-0.6.jar snakeyaml-1.7.jar"/>
+	
+	<fileset id="files" dir=".">
+		<filename name="bin/**/*.class"/>
+		<filename name="../DigiToolBox/bin/**/*.class"/>
+	</fileset>
+	
+	<zipfileset id="libs" dir=".">
+		<filename name="jar-in-jar-loader.zip" />
+		<filename name="../DigiToolBox/lib/axis.jar"/>
+		<filename name="../DigiToolBox/lib/jaxrpc.jar"/>
+		<filename name="../DigiToolBox/lib/wsdl4j.jar"/>
+		<filename name="../DigiToolBox/lib/activation.jar"/>
+		<filename name="../DigiToolBox/lib/commons-discovery.jar"/>
+		<filename name="../DigiToolBox/lib/commons-logging.jar"/>
+		<filename name="../DigiToolBox/lib/mail.jar"/>
+		<filename name="../DigiToolBox/dist/DigiToolBox.jar"/>
+		<filename name="lib/jewelcli-0.6.jar"/>
+		<filename name="lib/snakeyaml-1.7.jar"/>
+	</zipfileset>
+	
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: BuildRunnableJar          
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="BuildRunnableJar">
+		<attribute name="Class" default="Main" />
+		<sequential>
+			<jar destfile="dist/@{Class}.jar">
+				<manifest>
+					<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+					<attribute name="Rsrc-Main-Class" value="@{Class}"/>
+					<attribute name="Class-Path" value="."/>
+					<attribute name="Rsrc-Class-Path" value="${src_clss_path}"/>
+				</manifest>
+				<fileset refid="files" />
+				<zipfileset refid="libs" />
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<!--
+    <target name="create_AddChild_jar">
+        <jar destfile="dist/AddChild.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="AddChild"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="${src_clss_path}"/>
+            </manifest>
+            <zipfileset refid="loader"/>
+            <fileset dir="bin"/>
+            <fileset dir="../DigiToolBox/bin"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="axis.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="jaxrpc.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="wsdl4j.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="activation.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="commons-discovery.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="commons-logging.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="mail.jar"/>
+            <zipfileset dir="../DigiToolBox/dist" includes="DigiToolBox.jar"/>
+            <zipfileset dir="lib" includes="jewelcli-0.6.jar"/>
+            <zipfileset dir="lib" includes="snakeyaml-1.7.jar"/>
+        </jar>
+    </target>
+    	 -->
 </project>

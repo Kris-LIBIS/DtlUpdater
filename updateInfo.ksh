@@ -4,5 +4,5 @@ export TOOLS_DIR=`dirname $0`
 
 . $TOOLS_DIR/dtlUpdater.ksh "$@"
 
-java -cp $TOOLS_DIR/DtlUpdater.jar UpdateInfo --logFile $DTL_LOG_FILE --updateActionFile "$@"
+java -jar $TOOLS_DIR/dist/UpdateInfo.jar --logFile $DTL_LOG_FILE --updateActionFile "$@"
 
