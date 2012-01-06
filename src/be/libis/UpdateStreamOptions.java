@@ -15,7 +15,7 @@ import uk.co.flamingpenguin.jewel.cli.Unparsed;
  *
  * @author KrisD
  */
-@CommandLineInterface(application="java -cp DtlUpdate.jar UpdateStream")
+@CommandLineInterface(application="java -jar UpdateStream.jar")
 public interface UpdateStreamOptions extends GeneralOptions {
 
 

@@ -2,15 +2,10 @@
 <!DOCTYPE project>
 <project name="DtlUpdater" default="main">
 	
-	<target name="main" depends="create_jar,create_run_jars" />
-	
-	<target name="create_jar" description="Build jar">
-		<jar destfile="dist/DtlUpdater.jar" index="true">
-			<fileset dir="bin" />
-		</jar>
-	</target>
+	<target name="main" depends="create_run_jars" />
 	
 	<target name="create_run_jars">
+		<BuildRunnableJar class="DtlUpdater"/>
 		<BuildRunnableJar class="AddChild"/>
 		<BuildRunnableJar class="AddStream"/>
 		<BuildRunnableJar class="DeletePids"/>
@@ -19,25 +14,6 @@
 	</target>
 	
 	<property name="src_clss_path" value="./ axis.jar jaxrpc.jar wsdl4j.jar activation.jar commons-discovery.jar commons-logging.jar mail.jar DigiToolBox.jar jewelcli-0.6.jar snakeyaml-1.7.jar"/>
-	
-	<fileset id="files" dir=".">
-		<filename name="bin/**/*.class"/>
-		<filename name="../DigiToolBox/bin/**/*.class"/>
-	</fileset>
-	
-	<zipfileset id="libs" dir=".">
-		<filename name="jar-in-jar-loader.zip" />
-		<filename name="../DigiToolBox/lib/axis.jar"/>
-		<filename name="../DigiToolBox/lib/jaxrpc.jar"/>
-		<filename name="../DigiToolBox/lib/wsdl4j.jar"/>
-		<filename name="../DigiToolBox/lib/activation.jar"/>
-		<filename name="../DigiToolBox/lib/commons-discovery.jar"/>
-		<filename name="../DigiToolBox/lib/commons-logging.jar"/>
-		<filename name="../DigiToolBox/lib/mail.jar"/>
-		<filename name="../DigiToolBox/dist/DigiToolBox.jar"/>
-		<filename name="lib/jewelcli-0.6.jar"/>
-		<filename name="lib/snakeyaml-1.7.jar"/>
-	</zipfileset>
 	
 	<!-- = = = = = = = = = = = = = = = = =
           macrodef: BuildRunnableJar          
@@ -52,8 +28,19 @@
 					<attribute name="Class-Path" value="."/>
 					<attribute name="Rsrc-Class-Path" value="${src_clss_path}"/>
 				</manifest>
-				<fileset refid="files" />
-				<zipfileset refid="libs" />
+	            <zipfileset src="jar-in-jar-loader.zip"/>
+				<fileset dir="bin"/>
+				<fileset dir="../DigiToolBox/bin"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="axis.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="jaxrpc.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="wsdl4j.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="activation.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="commons-discovery.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="commons-logging.jar"/>
+	            <zipfileset dir="../DigiToolBox/lib" includes="mail.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist" includes="DigiToolBox.jar"/>
+	            <zipfileset dir="lib" includes="jewelcli-0.6.jar"/>
+	            <zipfileset dir="lib" includes="snakeyaml-1.7.jar"/>
 			</jar>
 		</sequential>
 	</macrodef>

@@ -15,7 +15,7 @@ import uk.co.flamingpenguin.jewel.cli.Unparsed;
  *
  * @author KrisD
  */
-@CommandLineInterface(application="java -cp DtlUpdate.jar AddChild")
+@CommandLineInterface(application="java -jar AddChild.jar")
 public interface AddChildOptions extends GeneralOptions {
 
     @Option(shortName="p",description="PID of Complex object")

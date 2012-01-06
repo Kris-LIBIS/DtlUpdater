@@ -17,16 +17,14 @@ import uk.co.flamingpenguin.jewel.cli.CliFactory;
  *
  * @author KrisD
  */
-public class Main {
+public class DtlUpdater {
     
     static Properties prop = System.getProperties();
 
     public static void main(String[] args) {
         PrintStream out = System.err;
 
-        String class_path = prop.getProperty("java.class.path", null);
-
-        out.println("\nUsage: java -cp " + class_path + " <command> ...");
+        out.println("\nUsage: java -jar <command>.jar ...");
         out.println("\ncommand: UpdateStream  - Update file stream(s) in the DigiTool Repository\n");
         out.println(CliFactory.createCli(UpdateStreamOptions.class).getHelpMessage());
         out.println("\ncommand: DeletePids    - Delete object(s) from the DigiTool repository\n");

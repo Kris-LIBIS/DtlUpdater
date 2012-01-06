@@ -15,7 +15,7 @@ import uk.co.flamingpenguin.jewel.cli.Unparsed;
  *
  * @author KrisD
  */
-@CommandLineInterface(application="java -cp DtlUpdate.jar UpdateInfo")
+@CommandLineInterface(application="java -jar UpdateInfo.jar")
 public interface UpdateInfoOptions extends GeneralOptions {
 
     @Option(description="Update action file")

@@ -15,7 +15,7 @@ import uk.co.flamingpenguin.jewel.cli.Unparsed;
  *
  * @author KrisD
  */
-@CommandLineInterface(application="java -cp DtlUpdate.jar DeletePids")
+@CommandLineInterface(application="java -jar DeletePids.jar")
 public interface DeletePidsOptions extends GeneralOptions {
 
     @Option(description="Input file containing a list of PIDs to delete")
