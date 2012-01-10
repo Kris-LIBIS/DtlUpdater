@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<!DOCTYPE project>
+<project name="DtlUpdater" default="main">
+	
+	<target name="main" depends="create_run_jars" />
+	
+	<target name="create_run_jars">
+		<BuildRunnableJar class="DtlUpdater"/>
+		<BuildRunnableJar class="AddChild"/>
+		<BuildRunnableJar class="AddStream"/>
+		<BuildRunnableJar class="DeletePids"/>
+		<BuildRunnableJar class="UpdateInfo"/>
+		<BuildRunnableJar class="UpdateStream"/>
+	</target>
+	
+	<property name="src_clss_path" value="./ axis.jar jaxrpc.jar wsdl4j.jar activation.jar commons-discovery.jar commons-logging.jar mail.jar DigiToolBox.jar jewelcli-0.6.jar snakeyaml-1.7.jar"/>
+	
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: BuildRunnableJar          
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="BuildRunnableJar">
+		<attribute name="Class" default="Main" />
+		<sequential>
+			<jar destfile="dist/@{Class}.jar">
+				<manifest>
+					<attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+					<attribute name="Rsrc-Main-Class" value="@{Class}"/>
+					<attribute name="Class-Path" value="."/>
+					<attribute name="Rsrc-Class-Path" value="${src_clss_path}"/>
+				</manifest>
+	            <zipfileset src="jar-in-jar-loader.zip"/>
+				<fileset dir="bin"/>
+				<fileset dir="../DigiToolBox/bin"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="axis.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="jaxrpc.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="wsdl4j.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="activation.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="commons-discovery.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="commons-logging.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist/lib" includes="mail.jar"/>
+	            <zipfileset dir="../DigiToolBox/dist" includes="DigiToolBox.jar"/>
+	            <zipfileset dir="lib" includes="jewelcli-0.6.jar"/>
+	            <zipfileset dir="lib" includes="snakeyaml-1.7.jar"/>
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<!--
+    <target name="create_AddChild_jar">
+        <jar destfile="dist/AddChild.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="AddChild"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="${src_clss_path}"/>
+            </manifest>
+            <zipfileset refid="loader"/>
+            <fileset dir="bin"/>
+            <fileset dir="../DigiToolBox/bin"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="axis.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="jaxrpc.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="wsdl4j.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="activation.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="commons-discovery.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="commons-logging.jar"/>
+            <zipfileset dir="../DigiToolBox/lib" includes="mail.jar"/>
+            <zipfileset dir="../DigiToolBox/dist" includes="DigiToolBox.jar"/>
+            <zipfileset dir="lib" includes="jewelcli-0.6.jar"/>
+            <zipfileset dir="lib" includes="snakeyaml-1.7.jar"/>
+        </jar>
+    </target>
+    	 -->
+</project>

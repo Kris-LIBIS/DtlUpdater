@@ -24,4 +24,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib</name>
+			<type>2</type>
+			<location>/data/projects/DtlUpdater/lib</location>
+		</link>
+	</linkedResources>
 </projectDescription>
